@@ -1,17 +1,18 @@
-# Imagem base leve com Python 3.11
+# Usa imagem base enxuta do Python
 FROM python:3.11-slim
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia todos os arquivos da pasta app/ para /app no container
-COPY app/ /app
-
-# Copia o requirements.txt da raiz para dentro do container
+# Copia os arquivos da raiz do projeto (inclusive requirements.txt)
 COPY requirements.txt .
+COPY app/ ./app
+COPY __init__.py .
+COPY main.py .
+COPY senha.py .
 
-# Instala as dependências listadas no requirements.txt
+# Instala as dependências da aplicação
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Define o comando de inicialização do container
-CMD ["python", "app.py"]
+# Comando para iniciar a aplicação Flask
+CMD ["python", "app/main.py"]
