@@ -2,15 +2,15 @@ version: '3.8'
 
 services:
   jenkins:
-    image: jenkins/jenkins:lts
+    image: jenkins/jenkins:lts  # Imagem oficial LTS do Jenkins
     ports:
-      - "8080:8080"       # Acesso ao Jenkins
-      - "50000:50000"     # Comunicação entre master e agentes (se usar agentes)
+      - "8080:8080"             # Porta para acessar o Jenkins pela web
+      - "50000:50000"           # Porta usada para comunicação com agentes (se houver)
     volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-    user: root
-    restart: unless-stopped
+      - jenkins_home:/var/jenkins_home  # Volume persistente do Jenkins
+      - /var/run/docker.sock:/var/run/docker.sock  # Permite que o Jenkins use o Docker do host
+    user: root                  # Necessário para acessar o docker.sock
+    restart: unless-stopped    # Reinicia automaticamente o Jenkins se parar
 
 volumes:
-  jenkins_home:
+  jenkins_home:                # Volume nomeado persistente
